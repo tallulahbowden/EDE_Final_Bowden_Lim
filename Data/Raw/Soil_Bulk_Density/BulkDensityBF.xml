@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>Ebel, Brian A.</origin>
+        <origin>Moody, John A.</origin>
+        <origin>Martin, Deborah A.</origin>
+        <pubdate>20210624</pubdate>
+        <title>Soil dry bulk density as a function of burn severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest Fire, Colorado USA</title>
+        <geoform>spreadsheet</geoform>
+        <serinfo>
+          <sername>USGS Data Release</sername>
+          <issue>Not assigned yet</issue>
+        </serinfo>
+        <onlink>https://doi.org/10.5066/P9A88C67</onlink>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>Wildfire can impact soil-physical and soil-hydraulic properties, with major implications for hydrologic and ecologic response. The durations of these soil impacts are poorly characterized for some forested environments. This dataset sheds light on the first four years of recovery of soil-physical properties of bulk density, loss on ignition (measure of soil organic matter), ground cover, and soil particle size distribution and of soil-hydraulic properties of sorptivity and field-saturated hydraulic conductivity. The dataset also includes a simple infiltration model used to examine infiltration as the sites recover from fire.
+
+Sample locations within the 2013 Black Forest Fire study area are:
+BF1, UTM-Easting (m) 532027, UTM-Northing (m) 4323210, Approximate elevation (± 5m) 2288;
+BF2, UTM-Easting (m) 532139, UTM-Northing (m) 4323273, Approximate elevation (± 5m) 2288;
+BF3, UTM-Easting (m) 532015, UTM-Northing (m) 4323416, Approximate elevation (± 5m) 2285;
+BF4, UTM-Easting (m) 532166, UTM-Northing (m) 4323576, Approximate elevation (± 5m) 2292;
+BF5, UTM-Easting (m) 532370, UTM-Northing (m) 4323194, Approximate elevation (± 5m) 2293;
+BF6, UTM-Easting (m) 532712, UTM-Northing (m) 4323283, Approximate elevation (± 5m) 2300;
+UTM is Universal Transverse Mercator, Zone 13, NAD83 datum, GRS80 geodetic reference system.</abstract>
+      <purpose>This project investigated recovery of soil properties that influence flash flood generation in the area affected by the 2013 Black Forest Fire in Colorado, USA. Data were collected for three temporal snapshots (2013, 2105, and 2017) during a time period of four years following the wildfire to assess remaining flood hazards. Data include bulk density, loss on ignition, ground cover, soil particle size, soil-hydraulic properties, and simple infiltration modeling.</purpose>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <rngdates>
+          <begdate>20130723</begdate>
+          <enddate>20170619</enddate>
+        </rngdates>
+      </timeinfo>
+      <current>ground condition</current>
+    </timeperd>
+    <status>
+      <progress>Complete</progress>
+      <update>None planned</update>
+    </status>
+    <spdom>
+      <bounding>
+        <westbc>-104.65027</westbc>
+        <eastbc>-104.57886</eastbc>
+        <northbc>39.11728</northbc>
+        <southbc>39.02772</southbc>
+      </bounding>
+      <descgeog>Colorado</descgeog>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>ISO 19115 Topic Category</themekt>
+        <themekey>biota</themekey>
+      </theme>
+      <theme>
+        <themekt>None</themekt>
+        <themekey>wildfire, colorado, wildland fire, soil properties, soil-hydraulic properties</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Metadata Identifier</themekt>
+        <themekey>USGS:5b845684e4b05f6e321b62ba</themekey>
+      </theme>
+      <place>
+        <placekt>None</placekt>
+        <placekey>Colorado, Black Forest</placekey>
+      </place>
+    </keywords>
+    <accconst>None.  Please see 'Distribution Info' for details.</accconst>
+    <useconst>None.  Users are advised to read the data set's metadata thoroughly to understand appropriate use and data limitations.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntperp>
+          <cntper>Brian A. Ebel</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>Research Hydrologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Box 25046, MS410, Denver Fed. Center, Bldg. 53</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>303-236-3977</cntvoice>
+        <cntemail>bebel@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <native>Windows 10, Microsoft Excel 2016, Python 3.6</native>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>Dry soil bulk density values are based upon manually split soil volumes and masses weighed on a calibrated digital balance. Values are reported to 2 significant figures. No additional tests were conducted to assess the accuracy of values.</attraccr>
+    </attracc>
+    <logic>Data match details provided and values fall within expected ranges. Data has been checked for duplication and omission.</logic>
+    <complete>The dataset only represents occurrences within the area impacted by the 2013 Black Forest Fire in Colorado, USA. Samples PSA 3-1 and PSA 3-2 have only 2 split values for 2013. The datasets are complete for 2015 and 2017, with the exception that site BF2 was not sampled in 2017 because the site was compromised by soil damage from salvage logging.  Two files are included for 2013, one with 4 samples per site for the same samples used for loss on ignition and soil particle size measurement and one with 10 samples per site.</complete>
+    <posacc>
+      <horizpa>
+        <horizpar>Horizontal locations are accurate to within recreational GPS accuracy (several meters).</horizpar>
+      </horizpa>
+      <vertacc>
+        <vertaccr>Vertical locations are accurate to within recreational GPS accuracy (5 meters)</vertaccr>
+      </vertacc>
+    </posacc>
+    <lineage>
+      <procstep>
+        <procdesc>Dry bulk density values were estimated by splitting an oven dried (24 hrs at 105 degrees C) 6-cm soil core into known volumes and weighing those volumes on a digital balance.</procdesc>
+        <procdate>20130801</procdate>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <spref>
+    <horizsys>
+      <geograph>
+        <latres>0.01</latres>
+        <longres>0.01</longres>
+        <geogunit>Decimal degrees</geogunit>
+      </geograph>
+      <geodetic>
+        <horizdn>World Geodetic System 1984 (WGS 84)</horizdn>
+        <ellips>WGS_1984</ellips>
+        <semiaxis>6378137</semiaxis>
+        <denflat>298.24</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>bulkdensity2013_N4.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing data from 2013 for dry bulk density.</enttypd>
+        <enttypds>Producer defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>SampleID</attrlabl>
+        <attrdef>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <udom>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Site</attrlabl>
+        <attrdef>Site name where soil sample was collected. Sites were chosen based upon remotely-sensed burn severity classification.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF1</edomv>
+            <edomvd>First site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF2</edomv>
+            <edomvd>Second site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF3</edomv>
+            <edomvd>Third site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF4</edomv>
+            <edomvd>Fourth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF5</edomv>
+            <edomvd>Fifth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF6</edomv>
+            <edomvd>Sixth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Depth(cm)</attrlabl>
+        <attrdef>Depth range (cm below land surface) of the sample split for dry bulk density estimation</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <udom>Depth range (centimeters below land surface) of the sample split for dry bulk density estimation</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Bulk density(g/cm^3)</attrlabl>
+        <attrdef>Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>&lt;&lt; empty cell &gt;&gt;</edomv>
+            <edomvd>No Data</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.16</rdommin>
+            <rdommax>1.65</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>bulkdensity2015.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing data from 2015 for dry bulk density.</enttypd>
+        <enttypds>Producer defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>SampleID</attrlabl>
+        <attrdef>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Site</attrlabl>
+        <attrdef>Site name where soil sample was collected. Sites were chosen based upon remotely-sensed burn severity classification.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>BF1</edomv>
+            <edomvd>First site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF2</edomv>
+            <edomvd>Second site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF3</edomv>
+            <edomvd>Third site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF4</edomv>
+            <edomvd>Fourth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF5</edomv>
+            <edomvd>Fifth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF6</edomv>
+            <edomvd>Sixth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>0-1.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 0-1 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.20</rdommin>
+            <rdommax>1.9</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>1.0-3.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 1-3 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.28</rdommin>
+            <rdommax>1.69</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>3.0-6.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 3-6 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.60</rdommin>
+            <rdommax>1.73</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>bulkdensity2017.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing data  from 2017 for dry bulk density. Note that site BF2 was not sampled in 2017 because the site was compromised by soil damage from salvage logging.</enttypd>
+        <enttypds>Producer defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>SampleID</attrlabl>
+        <attrdef>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <udom>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Site</attrlabl>
+        <attrdef>Site name where soil sample was collected. Sites were chosen based upon remotely-sensed burn severity classification.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>BF1</edomv>
+            <edomvd>First site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF3</edomv>
+            <edomvd>Third site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF4</edomv>
+            <edomvd>Fourth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF5</edomv>
+            <edomvd>Fifth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF6</edomv>
+            <edomvd>Sixth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>0-1.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 0-1 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.27</rdommin>
+            <rdommax>1.96</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>1.0-3.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 1-3 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.39</rdommin>
+            <rdommax>1.63</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>3.0-6.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 3-6 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.69</rdommin>
+            <rdommax>1.66</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>bulkdensity2013_N10.csv</enttypl>
+        <enttypd>Comma Separated Value (CSV) file containing data.</enttypd>
+        <enttypds>Producer Defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>SampleID</attrlabl>
+        <attrdef>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <udom>Soil sample identification, name of the soil sample from the 2013 Black Forest Fire</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Site</attrlabl>
+        <attrdef>Site name where soil sample was collected. Sites were chosen based upon remotely-sensed burn severity classification.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>BF1</edomv>
+            <edomvd>First site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF2</edomv>
+            <edomvd>Second site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF3</edomv>
+            <edomvd>Third site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF4</edomv>
+            <edomvd>Fourth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF5</edomv>
+            <edomvd>Fifth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BF6</edomv>
+            <edomvd>Sixth site</edomvd>
+            <edomvds>Producer defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>0-1.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 0-1 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.18</rdommin>
+            <rdommax>1.75</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>1.0-3.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 1-3 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.34</rdommin>
+            <rdommax>1.41</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>3.0-6.0 cm</attrlabl>
+        <attrdef>Soil bulk values for 1-3 cm below land surface of the sample split for dry bulk density estimation. Dry bulk density values, values less than 1.0 typically represent wildfire ash or litter/duff material.</attrdef>
+        <attrdefs>Producer Defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>0.85</rdommin>
+            <rdommax>1.75</rdommax>
+            <attrunit>grams per centimeter cubed</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <overview>
+      <eaover>Dry bulk density data for soil sampling from 2013, 2015, and 2017 in the area impacted by the 2013 Black Forest Fire in Colorado. Two files are included for 2013, one with 4 samples per site for the same samples used for loss on ignition and soil particle size measurement and one with 10 samples per site for the samples analyzed for soil-hydraulic properties.
+Note that site BF2 was not sampled in 2017 because the site was compromised by soil damage from salvage logging.</eaover>
+      <eadetcit>Ebel., B.A., Moody, J.A., Martin, D.A. 2021. Soil-physical and soil-hydraulic properties as a function of burn severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest Fire, Colorado USA U.S. Geological Survey Data Release. https://doi.org/10.5066/P9A88C67</eadetcit>
+    </overview>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntperp>
+          <cntper>GS ScienceBase</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntaddr>
+          <addrtype>mailing address</addrtype>
+          <address>Denver Federal Center, Building 810, Mail Stop 302</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>United States</country>
+        </cntaddr>
+        <cntvoice>1-888-275-8747</cntvoice>
+        <cntemail>sciencebase@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <distliab>Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the U.S. Geological Survey (USGS), no warranty expressed or implied is made regarding the display or utility of the data on any other system or for general or scientific purposes, nor shall the act of distribution constitute any such warranty.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>Digital Data</formname>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://doi.org/10.5066/P9A88C67</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>None</fees>
+    </stdorder>
+  </distinfo>
+  <metainfo>
+    <metd>20210624</metd>
+    <metc>
+      <cntinfo>
+        <cntperp>
+          <cntper>Brian A. Ebel</cntper>
+          <cntorg>U.S. Geological Survey</cntorg>
+        </cntperp>
+        <cntpos>Research Hydrologist</cntpos>
+        <cntaddr>
+          <addrtype>mailing and physical</addrtype>
+          <address>Box 25046, MS410, Denver Fed. Center, Bldg. 53</address>
+          <city>Denver</city>
+          <state>CO</state>
+          <postal>80225</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>303-236-3977</cntvoice>
+        <cntemail>bebel@usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Biological Data Profile of the Content Standard for Digital Geospatial Metadata</metstdn>
+    <metstdv>FGDC-STD-001.1-1999</metstdv>
+  </metainfo>
+</metadata>
