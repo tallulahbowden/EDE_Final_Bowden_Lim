@@ -12,12 +12,31 @@
 # Load your packages
 library(here)
 library(tidyverse)
+library(lubridate)
 
 # Set your ggplot theme
 
+tb_el_theme <- theme_classic(base_size = 14) +
+  theme(
+    axis.title = element_text(color = "darkblue"),
+    panel.background = element_rect(fill = "gray"),
+    legend.position = "top")
+
+theme_set(tb_el_theme)
+
 # Load your datasets
 
-soil_hp_2013 <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2013.csv"))
+soil_hp_2013_raw <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2013.csv"))
+soil_hp_2015_raw <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2015.csv"))
+soil_hp_2017_raw <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2017.csv"))
+
+soil_ps_2013_raw <- read.csv(here("./Data/Raw/Soil_Particle_Size/psaBF2013.csv"))
+soil_ps_2015_raw <- read.csv(here("./Data/Raw/Soil_Particle_Size/psaBF2015.csv"))
+soil_ps_2017_raw <- read.csv(here("./Data/Raw/Soil_Particle_Size/psaBF2017.csv"))
+
+soil_bd_2013_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2013_N10.csv"))
+soil_bd_2015_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2015.csv"))
+soil_bd_2017_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2017.csv"))
 ```
 
 
