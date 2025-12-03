@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 \newpage
 \tableofcontents 
 \newpage
@@ -42,18 +47,40 @@ soil_bd_2017_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2017.
 
 # Rationale and Research Questions
 
+Wildfires are becoming more severe, and climate change is creating warmer and
+drier conditions in many places around the globe, making them more wildfire prone.
+Depending on their severity, wildfire can have significant and negative impacts
+on physical properties of soil, which directly relates to how much water an
+area can hold. 
 
+The 2013 Black Forest Fire in Colorado's El Paso County covered 14,280 acres
+and destroyed 489 homes. It is one of the most destructive forest fires in the
+state's history. Following the fire, researchers collected soil data at various
+sites with varying burn severity. 
+
+We seek to better understand how the wildfire and its different intensities
+impacted the soil's physical characteristics. 
 
 \newpage
 
 # Dataset Information
 
+Data Source: Soil-physical and soil-hydraulic properties as a function of burn severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest Fire, Colorado USA (ver. 2.0, June 2021)
+
+Retrieved from: https://www.sciencebase.gov/catalog/item/5b8452f5e4b05f6e321b629b
+
+Variables used: Soil dry bulk density, soil particle size, soil-hydraulic properties
+
+Data range: 2013-07-23 to 2017-06-19
 
 
 \newpage
 
 # Exploratory Analysis 
 
+```{r}
+
+```
 
 
 \newpage
