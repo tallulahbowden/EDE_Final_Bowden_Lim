@@ -1,5 +1,5 @@
 ---
-title: "The Impact of Fire Severity on Soil Characteristics over 4 Years"
+title: "2013 Black Forest Fire (Colorado) burn severity impact on soil physical and soil hydraulic properties."
 author: "Evan Lim and Tallulah Bowden"
 output: pdf_document
 editor_options: 
@@ -21,6 +21,7 @@ getwd()
 library(here)
 library(tidyverse)
 library(lubridate)
+library(agricolae)
 
 # Set your ggplot theme
 
@@ -36,27 +37,36 @@ theme_set(tb_el_theme)
 
 #hydraulic properties (kfs and sorptivity)
 soil_hp_2013_raw <- read.csv(
-  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2013.csv"))
+  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2013.csv"), 
+  stringsAsFactors = TRUE)
 soil_hp_2015_raw <- read.csv(
-  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2015.csv"))
+  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2015.csv"), 
+  stringsAsFactors = TRUE)
 soil_hp_2017_raw <- read.csv(
-  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2017.csv"))
+  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2017.csv"), 
+  stringsAsFactors = TRUE)
 
 #particle size/soil texture
 soil_ps_2013_raw <- read.csv(
-  here("./Data/Raw/Soil_Particle_Size/psaBF2013.csv"))
+  here("./Data/Raw/Soil_Particle_Size/psaBF2013.csv"), 
+  stringsAsFactors = TRUE)
 soil_ps_2015_raw <- read.csv(
-  here("./Data/Raw/Soil_Particle_Size/psaBF2015.csv"))
+  here("./Data/Raw/Soil_Particle_Size/psaBF2015.csv"), 
+  stringsAsFactors = TRUE)
 soil_ps_2017_raw <- read.csv(
-  here("./Data/Raw/Soil_Particle_Size/psaBF2017.csv"))
+  here("./Data/Raw/Soil_Particle_Size/psaBF2017.csv"), 
+  stringsAsFactors = TRUE)
 
 #bulk density
 soil_bd_2013_raw <- read.csv(
-  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2013_N10.csv"))
+  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2013_N10.csv"), 
+  stringsAsFactors = TRUE)
 soil_bd_2015_raw <- read.csv(
-  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2015.csv"))
+  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2015.csv"), 
+  stringsAsFactors = TRUE)
 soil_bd_2017_raw <- read.csv(
-  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2017.csv"))
+  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2017.csv"), 
+  stringsAsFactors = TRUE)
 ```
 
 
@@ -168,9 +178,83 @@ all_bd <- rbind(bd_filtered_2013, bd_filtered_2015, bd_filtered_2017)
 ```
 
 \newpage
-
+##NEED TO DO ASSUMPTIONS TESTS
 # Analysis
+```{r hydraulic properties anova, message=F, warning=F}
+#kfs
+kfs.anova.2way <- aov(data = all_hp, 
+                     Kfs..mm.per.hr...DL ~ Site * Year)
+summary(kfs.anova.2way)
+TukeyHSD(kfs.anova.2way)
+kfs.interaction <- with(all_hp, interaction(Site, Year))
+kfs.anova.2way2 <- aov(data = all_hp, Kfs..mm.per.hr...DL ~ kfs.interaction)
+kfs.groups <- HSD.test(kfs.anova.2way2, "kfs.interaction", group = TRUE)
+kfs.groups
+kfs.anova.plot <- ggplot(all_hp, aes(y = Kfs..mm.per.hr...DL, x = Site, color = Year)) +
+  geom_boxplot()
+print(kfs.anova.plot)
 
+#sorptivity
+sorptivity.anova.2way <- aov(data = all_hp, 
+                     Sorptivity..mm.per.sqrt.hr....DL ~ Site * Year)
+summary(sorptivity.anova.2way)
+TukeyHSD(sorptivity.anova.2way)
+sorptivity.interaction <- with(all_hp, interaction(Site, Year))
+sorptivity.anova.2way2 <- aov(data = all_hp, Sorptivity..mm.per.sqrt.hr....DL ~ sorptivity.interaction)
+sorptivity.groups <- HSD.test(sorptivity.anova.2way2, "sorptivity.interaction", group = TRUE)
+sorptivity.groups
+sorptivity.anova.plot <- ggplot(all_hp, aes(y = Sorptivity..mm.per.sqrt.hr....DL, x = Site, color = Year)) +
+  geom_boxplot()
+print(sorptivity.anova.plot)
+```
+
+```{r particle size anove, message=F, warning=F}
+#gravel
+#how do we keep soil depth in account here? they seem to be random
+
+```
+
+```{r bulk density anova, message=F, warning=F}
+#0-1 cm
+bdA.anova.2way <- aov(data = all_bd, 
+                     X0.1.0.cm ~ Site * Year)
+summary(bdA.anova.2way)
+TukeyHSD(bdA.anova.2way)
+bdA.interaction <- with(all_bd, interaction(Site, Year))
+bdA.anova.2way2 <- aov(data = all_bd, X0.1.0.cm ~ bdA.interaction)
+bdA.groups <- HSD.test(bdA.anova.2way2, "bdA.interaction", group = TRUE)
+bdA.groups
+bdA.anova.plot <- ggplot(all_bd, aes(y = X0.1.0.cm, x = Site, color = Year)) +
+  geom_boxplot()
+print(bdA.anova.plot)
+
+#1-3 cm
+bdB.anova.2way <- aov(data = all_bd, 
+                     X1.0.3.0.cm ~ Site * Year)
+summary(bdB.anova.2way)
+TukeyHSD(bdB.anova.2way)
+bdB.interaction <- with(all_bd, interaction(Site, Year))
+bdB.anova.2way2 <- aov(data = all_bd, X1.0.3.0.cm ~ bdB.interaction)
+bdB.groups <- HSD.test(bdB.anova.2way2, "bdB.interaction", group = TRUE)
+bdB.groups
+bdB.anova.plot <- ggplot(all_bd, aes(y = X1.0.3.0.cm, x = Site, color = Year)) +
+  geom_boxplot()
+print(bdB.anova.plot)
+
+#3-6 cm
+bdC.anova.2way <- aov(data = all_bd, 
+                     X3.0.6.0.cm ~ Site * Year)
+summary(bdC.anova.2way)
+TukeyHSD(bdC.anova.2way)
+bdC.interaction <- with(all_bd, interaction(Site, Year))
+bdC.anova.2way2 <- aov(data = all_bd, X3.0.6.0.cm ~ bdC.interaction)
+bdC.groups <- HSD.test(bdC.anova.2way2, "bdC.interaction", group = TRUE)
+bdC.groups
+bdC.anova.plot <- ggplot(all_bd, aes(y = X3.0.6.0.cm, x = Site, color = Year)) +
+  geom_boxplot()
+print(bdC.anova.plot)
+
+```
 
 
 ## Question 1: <insert specific question here and add additional subsections for additional questions below, if needed>
