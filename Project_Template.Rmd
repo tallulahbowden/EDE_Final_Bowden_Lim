@@ -1,3 +1,10 @@
+---
+title: "Template"
+author: "Evan Lim and Tallulah Bowden"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
 \newpage
 \tableofcontents 
 \newpage
@@ -8,6 +15,7 @@
 
 ```{r setup, include=FALSE}
 # Set your working directory
+getwd()
 
 # Load your packages
 library(here)
