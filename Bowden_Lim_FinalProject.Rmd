@@ -1,5 +1,7 @@
 ---
-output: html_document
+title: "The Impact of Fire Severity on Soil Characteristics over 4 Years"
+author: "Evan Lim and Tallulah Bowden"
+output: pdf_document
 editor_options: 
   chunk_output_type: console
 ---
@@ -11,8 +13,9 @@ editor_options:
 \listoffigures 
 \newpage
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=F, warning=F}
 # Set your working directory
+getwd()
 
 # Load your packages
 library(here)
@@ -31,27 +34,39 @@ theme_set(tb_el_theme)
 
 # Load your datasets
 
-soil_hp_2013_raw <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2013.csv"))
-soil_hp_2015_raw <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2015.csv"))
-soil_hp_2017_raw <- read.csv(here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2017.csv"))
+#hydraulic properties (kfs and sorptivity)
+soil_hp_2013_raw <- read.csv(
+  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2013.csv"))
+soil_hp_2015_raw <- read.csv(
+  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2015.csv"))
+soil_hp_2017_raw <- read.csv(
+  here("./Data/Raw/Soil_Hydraulic_Properties/SHPs2017.csv"))
 
-soil_ps_2013_raw <- read.csv(here("./Data/Raw/Soil_Particle_Size/psaBF2013.csv"))
-soil_ps_2015_raw <- read.csv(here("./Data/Raw/Soil_Particle_Size/psaBF2015.csv"))
-soil_ps_2017_raw <- read.csv(here("./Data/Raw/Soil_Particle_Size/psaBF2017.csv"))
+#particle size/soil texture
+soil_ps_2013_raw <- read.csv(
+  here("./Data/Raw/Soil_Particle_Size/psaBF2013.csv"))
+soil_ps_2015_raw <- read.csv(
+  here("./Data/Raw/Soil_Particle_Size/psaBF2015.csv"))
+soil_ps_2017_raw <- read.csv(
+  here("./Data/Raw/Soil_Particle_Size/psaBF2017.csv"))
 
-soil_bd_2013_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2013_N10.csv"))
-soil_bd_2015_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2015.csv"))
-soil_bd_2017_raw <- read.csv(here("./Data/Raw/Soil_Bulk_Density/bulkdensity2017.csv"))
+#bulk density
+soil_bd_2013_raw <- read.csv(
+  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2013_N10.csv"))
+soil_bd_2015_raw <- read.csv(
+  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2015.csv"))
+soil_bd_2017_raw <- read.csv(
+  here("./Data/Raw/Soil_Bulk_Density/bulkdensity2017.csv"))
 ```
 
 
 # Rationale and Research Questions
 
 Wildfires are becoming more severe, and climate change is creating warmer and
-drier conditions in many places around the globe, making them more wildfire prone.
-Depending on their severity, wildfire can have significant and negative impacts
-on physical properties of soil, which directly relates to how much water an
-area can hold. 
+drier conditions in many places around the globe, making them more wildfire 
+prone. Depending on their severity, wildfire can have significant and negative 
+impacts on physical properties of soil, which directly relates to how much water 
+an area can hold. 
 
 The 2013 Black Forest Fire in Colorado's El Paso County covered 14,280 acres
 and destroyed 489 homes. It is one of the most destructive forest fires in the
@@ -65,23 +80,92 @@ impacted the soil's physical characteristics.
 
 # Dataset Information
 
-Data Source: Soil-physical and soil-hydraulic properties as a function of burn severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest Fire, Colorado USA (ver. 2.0, June 2021)
+Data Source: Soil-physical and soil-hydraulic properties as a function of burn 
+severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest 
+Fire, Colorado USA (ver. 2.0, June 2021)
 
-Retrieved from: https://www.sciencebase.gov/catalog/item/5b8452f5e4b05f6e321b629b
+Retrieved from: 
+https://www.sciencebase.gov/catalog/item/5b8452f5e4b05f6e321b629b
 
-Variables used: Soil dry bulk density, soil particle size, soil-hydraulic properties
+Variables used: 
+Soil dry bulk density, soil particle size, soil-hydraulic properties
 
-Data range: 2013-07-23 to 2017-06-19
+Data range: 
+2013-07-23 to 2017-06-19
 
 
 \newpage
 
 # Exploratory Analysis 
 
-```{r}
+```{r hydraulic properties wrangling, message=F, warning=F}
+#filter each hp dataset for BF1 (high severity), BF3 (moderate severity), and 
+#BF5 (low severity)
+hp_filtered_2013 <- soil_hp_2013_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  rename(Kfs..mm.per.hr...DL = Kfs..mm.per.hr...DL.method) %>%
+  rename(Sorptivity..mm.per.sqrt.hr....DL = Sorptivity..mm.per.sqrt.hr....DL.method) %>%
+  mutate(Year = "2013")
+
+hp_filtered_2015 <- soil_hp_2015_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  select(SampleID, 
+         Site, 
+         Kfs..mm.per.hr...DL, 
+         Sorptivity..mm.per.sqrt.hr....DL) %>%
+  na.omit() %>%
+  mutate(Year = "2015")
+
+hp_filtered_2017 <- soil_hp_2017_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  select(SampleID, 
+         Site, 
+         Kfs..mm.per.hr...DL, 
+         Sorptivity..mm.per.sqrt.hr....DL) %>%
+  na.omit() %>%
+  mutate(Year = "2017")
+
+all_hp <- rbind(hp_filtered_2013, hp_filtered_2015, hp_filtered_2017)
+```
+
+```{r particle size wrangling, warning=F, message=F}
+#filter each ps dataset for BF1 (high severity), BF3 (moderate severity), and 
+#BF5 (low severity)
+ps_filtered_2013 <- soil_ps_2013_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  mutate(Year = "2013")
+
+ps_filtered_2015 <- soil_ps_2015_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  mutate(Year = "2015")
+
+ps_filtered_2017 <- soil_ps_2017_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  mutate(Year = "2017")
+
+all_ps <- rbind(ps_filtered_2013, ps_filtered_2015, ps_filtered_2017)
 
 ```
 
+
+```{r bulk density wrangling, warning=F, message=F}
+#filter each bd dataset for BF1 (high severity), BF3 (moderate severity), and 
+#BF5 (low severity)
+bd_filtered_2013 <- soil_bd_2013_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  mutate(Year = "2013")
+
+bd_filtered_2015 <- soil_bd_2015_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  mutate(Year = "2015")
+
+bd_filtered_2017 <- soil_bd_2017_raw %>%
+  filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
+  mutate(Year = "2017")
+
+all_bd <- rbind(bd_filtered_2013, bd_filtered_2015, bd_filtered_2017)
+
+```
 
 \newpage
 
