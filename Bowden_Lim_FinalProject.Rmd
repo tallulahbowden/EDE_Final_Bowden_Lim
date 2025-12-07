@@ -179,7 +179,39 @@ all_bd <- rbind(bd_filtered_2013, bd_filtered_2015, bd_filtered_2017)
 
 \newpage
 ##NEED TO DO ASSUMPTIONS TESTS
+
 # Analysis
+```{r}
+#Assumption tests
+
+#Note: these are from the videos, but online says we actually are supposed
+#run this test on the residuals when doing a two way as opposed to the 
+#raw data...
+
+#Sorptivity
+shapiro.test(all_hp$Sorptivity..mm.per.sqrt.hr....DL[all_hp$Site == "BF1"])
+shapiro.test(all_hp$Sorptivity..mm.per.sqrt.hr....DL[all_hp$Site == "BF3"])
+shapiro.test(all_hp$Sorptivity..mm.per.sqrt.hr....DL[all_hp$Site == "BF5"])
+
+qqnorm(all_hp$Sorptivity..mm.per.sqrt.hr....DL); qqline(all_hp$Sorptivity..mm.per.sqrt.hr....DL)
+
+bartlett.test(all_hp$Sorptivity..mm.per.sqrt.hr....DL ~ all_hp$Site)
+
+#Kfs
+shapiro.test(all_hp$Kfs..mm.per.hr...DL[all_hp$Site == "BF1"])
+shapiro.test(all_hp$Kfs..mm.per.hr...DL[all_hp$Site == "BF3"])
+shapiro.test(all_hp$Kfs..mm.per.hr...DL[all_hp$Site == "BF5"])
+
+#BD 0 to 1
+shapiro.test(all_bd$X0.1.0.cm[all_bd$Site == "BF1"])
+
+
+#BD 1 to 3
+
+#BD 3 to 6
+
+```
+
 ```{r hydraulic properties anova, message=F, warning=F}
 #kfs
 kfs.anova.2way <- aov(data = all_hp, 
@@ -199,17 +231,58 @@ sorptivity.anova.2way <- aov(data = all_hp,
                      Sorptivity..mm.per.sqrt.hr....DL ~ Site * Year)
 summary(sorptivity.anova.2way)
 TukeyHSD(sorptivity.anova.2way)
+
 sorptivity.interaction <- with(all_hp, interaction(Site, Year))
 sorptivity.anova.2way2 <- aov(data = all_hp, Sorptivity..mm.per.sqrt.hr....DL ~ sorptivity.interaction)
 sorptivity.groups <- HSD.test(sorptivity.anova.2way2, "sorptivity.interaction", group = TRUE)
 sorptivity.groups
+
 sorptivity.anova.plot <- ggplot(all_hp, aes(y = Sorptivity..mm.per.sqrt.hr....DL, x = Site, color = Year)) +
   geom_boxplot()
 print(sorptivity.anova.plot)
+
+sorptivity.anova.plot.alt <- ggplot(all_hp, aes(y = Sorptivity..mm.per.sqrt.hr....DL, x = Year, color = Site)) +
+  geom_boxplot()
+
+print(sorptivity.anova.plot.alt)
 ```
 
-```{r particle size anove, message=F, warning=F}
+```{r particle size anova, message=F, warning=F}
 #gravel
+ps.g.anova.2way <- aov(data = all_ps, Gravel.... ~ Site * Year)
+summary(ps.g.anova.2way)
+TukeyHSD(ps.g.anova.2way)
+ps.g.interaction <- with(all_ps, interaction(Site, Year))
+ps.g.anova.2way2 <- aov(data = all_ps, Gravel.... ~ ps.g.interaction)
+ps.g.groups <- HSD.test(ps.g.anova.2way2, "ps.g.interaction", group = TRUE)
+ps.g.groups
+ps.g.anova.plot <- ggplot(all_ps, aes(y = Gravel...., x = Site, color = Year)) +
+  geom_boxplot()
+print(ps.g.anova.plot)
+
+#sand
+ps.s.anova.2way <- aov(data = all_ps, Sand.... ~ Site * Year)
+summary(ps.s.anova.2way)
+TukeyHSD(ps.s.anova.2way)
+ps.s.interaction <- with(all_ps, interaction(Site, Year))
+ps.s.anova.2way2 <- aov(data = all_ps, Sand.... ~ ps.s.interaction)
+ps.s.groups <- HSD.test(ps.s.anova.2way2, "ps.s.interaction", group = TRUE)
+ps.s.groups
+ps.s.anova.plot <- ggplot(all_ps, aes(y = Sand...., x = Site, color = Year)) +
+  geom_boxplot()
+print(ps.s.anova.plot)
+
+#silt/clay
+ps.sc.anova.2way <- aov(data = all_ps, Silt...Clay.... ~ Site * Year)
+summary(ps.sc.anova.2way)
+TukeyHSD(ps.sc.anova.2way)
+ps.sc.interaction <- with(all_ps, interaction(Site, Year))
+ps.sc.anova.2way2 <- aov(data = all_ps, Silt...Clay.... ~ ps.sc.interaction)
+ps.sc.groups <- HSD.test(ps.sc.anova.2way2, "ps.sc.interaction", group = TRUE)
+ps.sc.groups
+ps.sc.anova.plot <- ggplot(all_ps, aes(y = Silt...Clay...., x = Site, color = Year)) +
+  geom_boxplot()
+print(ps.sc.anova.plot)
 #how do we keep soil depth in account here? they seem to be random
 
 ```
