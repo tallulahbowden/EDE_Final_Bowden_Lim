@@ -22,6 +22,7 @@ library(here)
 library(tidyverse)
 library(lubridate)
 library(agricolae)
+library(car)
 
 # Set your ggplot theme
 
@@ -178,7 +179,6 @@ all_bd <- rbind(bd_filtered_2013, bd_filtered_2015, bd_filtered_2017)
 ```
 
 \newpage
-##NEED TO DO ASSUMPTIONS TESTS
 
 # Analysis
 ```{r}
@@ -247,6 +247,24 @@ sorptivity.anova.plot.alt <- ggplot(all_hp, aes(y = Sorptivity..mm.per.sqrt.hr..
 print(sorptivity.anova.plot.alt)
 ```
 
+
+```{r hydraulic properties assumptions, message=F, warning=F}
+#normality
+qqPlot(kfs.anova.2way$residuals, id = F)
+qqPlot(sorptivity.anova.2way$residuals, id = F)
+
+#homogeneity of variances
+leveneTest(kfs.anova.2way)  #p = 0.0016. should use Welch's ANOVA or log/sqrt transform
+leveneTest(sorptivity.anova.2way)
+
+#outliers
+plot(kfs.anova.2way, which = 5) #observation 310 is an outlier
+plot(sorptivity.anova.2way, which = 5)
+
+```
+
+
+
 ```{r particle size anova, message=F, warning=F}
 #gravel
 ps.g.anova.2way <- aov(data = all_ps, Gravel.... ~ Site * Year)
@@ -287,6 +305,26 @@ print(ps.sc.anova.plot)
 
 ```
 
+
+```{r particle size assumptions, message=F, warning=F}
+#normality
+qqPlot(ps.g.anova.2way$residuals, id = F)
+qqPlot(ps.s.anova.2way$residuals, id = F)
+qqPlot(ps.sc.anova.2way$residuals, id = F)
+
+#homogeneity of variances
+leveneTest(ps.g.anova.2way) #p-value = 7.0882 * 10^-11. should log/sqrt transform
+leveneTest(ps.s.anova.2way) #p-value = 0.0002052. should loq/sqrt transform
+leveneTest(ps.sc.anova.2way) #p-value = 7.027 * 10^-7. should log/sqrt transform
+
+#outliers
+plot(ps.g.anova.2way, which = 5) 
+plot(ps.s.anova.2way, which = 5)
+plot(ps.sc.anova.2way, which = 5)
+
+```
+
+
 ```{r bulk density anova, message=F, warning=F}
 #0-1 cm
 bdA.anova.2way <- aov(data = all_bd, 
@@ -326,6 +364,25 @@ bdC.groups
 bdC.anova.plot <- ggplot(all_bd, aes(y = X3.0.6.0.cm, x = Site, color = Year)) +
   geom_boxplot()
 print(bdC.anova.plot)
+
+```
+
+
+```{r bulk density assumptions, message=F, warning=F}
+#normality
+qqPlot(bdA.anova.2way$residuals, id = F)
+qqPlot(bdB.anova.2way$residuals, id = F)
+qqPlot(bdC.anova.2way, id = F)
+
+#homogeneity of variances
+leveneTest(bdA.anova.2way)
+leveneTest(bdB.anova.2way)
+leveneTest(bdC.anova.2way)
+
+#outliers
+plot(bdA.anova.2way, which = 5)
+plot(bdB.anova.2way, which = 5)
+plot(bdC.anova.2way, which = 5)
 
 ```
 
