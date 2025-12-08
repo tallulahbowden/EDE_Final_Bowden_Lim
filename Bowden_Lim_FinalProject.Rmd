@@ -158,10 +158,6 @@ ps_filtered_2017 <- soil_ps_2017_raw %>%
   mutate(Year = "2017")
 
 all_ps <- rbind(ps_filtered_2013, ps_filtered_2015, ps_filtered_2017)
-all_ps_new <- all_ps %>%
-  mutate(sqrt.gravel = sqrt(Gravel....)) %>%
-  mutate(sqrt.sand = sqrt(Sand....)) %>%
-  mutate(sqrt.silt.clay = sqrt(Silt...Clay....))
 
 ```
 
@@ -244,38 +240,38 @@ plot(sorptivity.anova.2way, which = 5)
 
 ```{r particle size anova, message=F, warning=F}
 #gravel
-ps.g.anova.2way <- aov(data = all_ps_new, sqrt.gravel ~ Site * Year)
+ps.g.anova.2way <- aov(data = all_ps, Gravel.... ~ Site * Year)
 summary(ps.g.anova.2way)
 TukeyHSD(ps.g.anova.2way)
-ps.g.interaction <- with(all_ps_new, interaction(Site, Year))
-ps.g.anova.2way2 <- aov(data = all_ps_new, sqrt.gravel ~ ps.g.interaction)
+ps.g.interaction <- with(all_ps, interaction(Site, Year))
+ps.g.anova.2way2 <- aov(data = all_ps, Gravel.... ~ ps.g.interaction)
 ps.g.groups <- HSD.test(ps.g.anova.2way2, "ps.g.interaction", group = TRUE)
 ps.g.groups
-ps.g.anova.plot <- ggplot(all_ps_new, aes(y = sqrt.gravel, x = Site, color = Year)) +
+ps.g.anova.plot <- ggplot(all_ps, aes(y = Gravel...., x = Site, color = Year)) +
   geom_boxplot()
 print(ps.g.anova.plot)
 
 #sand
-ps.s.anova.2way <- aov(data = all_ps_new, sqrt.sand ~ Site * Year)
+ps.s.anova.2way <- aov(data = all_ps, Sand.... ~ Site * Year)
 summary(ps.s.anova.2way)
 TukeyHSD(ps.s.anova.2way)
-ps.s.interaction <- with(all_ps_new, interaction(Site, Year))
-ps.s.anova.2way2 <- aov(data = all_ps_new, sqrt.sand ~ ps.s.interaction)
+ps.s.interaction <- with(all_ps, interaction(Site, Year))
+ps.s.anova.2way2 <- aov(data = all_ps, Sand.... ~ ps.s.interaction)
 ps.s.groups <- HSD.test(ps.s.anova.2way2, "ps.s.interaction", group = TRUE)
 ps.s.groups
-ps.s.anova.plot <- ggplot(all_ps_new, aes(y = sqrt.sand, x = Site, color = Year)) +
+ps.s.anova.plot <- ggplot(all_ps, aes(y = Sand...., x = Site, color = Year)) +
   geom_boxplot()
 print(ps.s.anova.plot)
 
 #silt/clay
-ps.sc.anova.2way <- aov(data = all_ps_new, sqrt.silt.clay ~ Site * Year)
+ps.sc.anova.2way <- aov(data = all_ps, Silt...Clay.... ~ Site * Year)
 summary(ps.sc.anova.2way)
 TukeyHSD(ps.sc.anova.2way)
-ps.sc.interaction <- with(all_ps_new, interaction(Site, Year))
-ps.sc.anova.2way2 <- aov(data = all_ps_new, sqrt.silt.clay ~ ps.sc.interaction)
+ps.sc.interaction <- with(all_ps, interaction(Site, Year))
+ps.sc.anova.2way2 <- aov(data = all_ps, Silt...Clay.... ~ ps.sc.interaction)
 ps.sc.groups <- HSD.test(ps.sc.anova.2way2, "ps.sc.interaction", group = TRUE)
 ps.sc.groups
-ps.sc.anova.plot <- ggplot(all_ps_new, aes(y = sqrt.silt.clay, x = Site, color = Year)) +
+ps.sc.anova.plot <- ggplot(all_ps, aes(y = Silt...Clay...., x = Site, color = Year)) +
   geom_boxplot()
 print(ps.sc.anova.plot)
 #how do we keep soil depth in account here? they seem to be random
@@ -290,9 +286,9 @@ qqPlot(ps.s.anova.2way$residuals, id = F)
 qqPlot(ps.sc.anova.2way$residuals, id = F)
 
 #homogeneity of variances
-leveneTest(ps.g.anova.2way) #p-value = 7.0882 * 10^-11. should log/sqrt transform
-leveneTest(ps.s.anova.2way) #p-value = 0.0002052. should loq/sqrt transform
-leveneTest(ps.sc.anova.2way) #p-value = 7.027 * 10^-7. should log/sqrt transform
+leveneTest(ps.g.anova.2way) #p-value = 7.0882 * 10^-11. transformations did not work. using original, untrasnformed data
+leveneTest(ps.s.anova.2way) #p-value = 0.0002052. transformations did not work. using original, untrasnformed data
+leveneTest(ps.sc.anova.2way) #p-value = 7.027 * 10^-7. transformations did not work. using original, untrasnformed data
 
 #outliers
 plot(ps.g.anova.2way, which = 5) 
