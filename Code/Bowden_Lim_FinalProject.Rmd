@@ -77,19 +77,11 @@ soil_bd_2017_raw <- read.csv(
 
 # 1. Rationale and Research Questions
 
-Wildfires are becoming more severe, and climate change is creating warmer and
-drier conditions in many places around the globe, making them more wildfire 
-prone. Depending on their severity, wildfire can have significant and negative 
-impacts on physical properties of soil, which directly relates to how much water 
-an area can hold. 
+Wildfires are becoming more severe, and climate change is creating warmer and drier conditions in many places around the globe, making them more wildfire prone. Depending on their severity, wildfire can have significant and negative impacts on physical properties of soil, which directly relates to how much water an area can hold. 
 
-The 2013 Black Forest Fire in Colorado's El Paso County covered 14,280 acres
-and destroyed 489 homes. It is one of the most destructive forest fires in the
-state's history. Following the fire, researchers collected soil data at various
-sites with varying burn severity. 
+The 2013 Black Forest Fire in Colorado's El Paso County covered 14,280 acres and destroyed 489 homes. It is one of the most destructive forest fires in the state's history. Following the fire, researchers collected soil data at various sites with varying burn severity. 
 
-We seek to better understand how the wildfire and its different intensities
-impacted the soil's physical characteristics. 
+We seek to better understand how the wildfire and its different intensities impacted the soil's physical characteristics. 
 
 \newpage
 
@@ -102,12 +94,13 @@ Table: Dataset information
 | Data Source | Soil-physical and soil-hydraulic properties as a function of burn severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest Fire, Colorado USA (ver. 2.0, June 2021) | 
 | Date range | 2013-07-23 to 2017-06-19 |
 | Source | Retrieved from: https://www.sciencebase.gov/catalog/item/5b8452f5e4b05f6e321b629b | 
-| Variables used | Soil field-saturated hydraulic conductivity (KFS) (mm/hr), soil sorptivity (mm/sqrt[hr]), soil particle size distribution (gravel, sand, silt+clay) (%), and soil dry bulk density (grams/[cm]^3) |
+| Variables used | Soil field-saturated hydraulic conductivity (KFS) (mm/hr), soil sorptivity (mm/$\sqrt{hr}$), soil particle size distribution (gravel, sand, silt+clay) (%), and soil dry bulk density (grams/cm^3^) |
 
 \newpage
 
 # 3. Exploration of raw data
 
+### Exploring hydraulic properties raw dataframes
 ```{r hydraulic properties data exploration, message=F, warning=F}
 #structure of 2013 raw dataset
 str(soil_hp_2013_raw)
@@ -142,7 +135,73 @@ Our 2013 raw dataframe has four variables, two related to site location and two 
 
 Our 2013 raw dataframe has no missing data. The 2015 raw dataframe has 38 missing values. The 2017 raw dataframe has 70 missing values. These missing values should be discarded before calculating descriptive statistics and conducting relavant tests.
 
-The site location column in each dataframe (TALK ABOUT BURN SEVERITY AND YEAR LEADING US TO DO TWO WAY ANOVA. FACTORS AND CONTINUOUS DEPENDENT VARIABLE). HOW DOES THIS INFLUENCE OUR HYPOTHESIS?
+The site location column in each dataframe is representative of areas with different burn severities. BF1, BF2, and BF4 are high severity burned areas, BF3 is a moderate severity burned area, and BF5 and BF6 are low severity burned areas. This column in each raw dataset is a factor with six levels. KFS and sorptivity columns in each raw dataset are of the numeric class meaning they are continuous. The structure of our data suggests that we are able to conduct a test with two factors (year and site) each with multiple levels and how they change a continuous dependent variable (KFS and sorptivity). This suggests we should conduct a two-way ANOVA. This influences our hypothesis as we now have three hypotheses for each variable: main effect of factor A, main effect of factor B, and interaction effect between A and B. 
+
+### Exploring particle size raw dataframes
+```{r particle size data exploration, message=F, warning=F}
+#structure of 2013 raw dataset
+str(soil_ps_2013_raw)
+
+#structure of 2015 raw dataset
+str(soil_ps_2015_raw)
+
+#structure of 2017 raw dataset
+str(soil_ps_2017_raw)
+
+#column names of 2013 raw dataset
+colnames(soil_ps_2013_raw)
+
+#column names of 2015 raw dataset
+colnames(soil_ps_2015_raw)
+
+#column names of 2017 raw dataset
+colnames(soil_ps_2017_raw)
+
+#summary 2013 raw dataset
+summary(soil_ps_2013_raw)
+
+#summary of 2015 raw dataset
+summary(soil_ps_2015_raw)
+
+#summary of 2017 raw dataset
+summary(soil_ps_2017_raw)
+
+```
+
+Our 2013, 2015, and 2017 raw dataframes all have six variables, two related to site location and four related to particle size measurements (depth, gravel, sand, and silt+clay). It is uncertain the pattern at which depth was collected and for this analysis, this column will be ignored. There are no missing values in any dataframe. The site column in each raw dataframe has the locations of different burn severities. This column is a factor class with six levels. The gravel, sand, and silt+clay columns are each of numeric class. This suggests that we should conduct a two-way ANOVA for each particle size. This will impact our hypotheses similarly to our hydraulic properties.
+
+### Exploring bulk density raw dataframes
+```{r bulk density data exploration, message=F, warning=F}
+#structure of 2013 raw dataset
+str(soil_bd_2013_raw)
+
+#structure of 2015 raw dataset
+str(soil_bd_2015_raw)
+
+#structure of 2017 raw dataset
+str(soil_bd_2017_raw)
+
+#column names of 2013 raw dataset
+colnames(soil_bd_2013_raw)
+
+#column names of 2015 raw dataset
+colnames(soil_bd_2015_raw)
+
+#column names of 2017 raw dataset
+colnames(soil_bd_2017_raw)
+
+#summary 2013 raw dataset
+summary(soil_bd_2013_raw)
+
+#summary of 2015 raw dataset
+summary(soil_bd_2015_raw)
+
+#summary of 2017 raw dataset
+summary(soil_bd_2017_raw)
+
+```
+
+Our 2013, 2015, and 2017 raw dataframes all have five variables, two related to site location and three related to bulk density measurements at three different depths (0-1cm, 1-3cm, and 3-6cm). There are no missing values in any dataframe. The site column in each raw dataframe has the locations of different burn severities. This column is a factor class with six levels. The 0-1cm, 1-3cm, and 3-6cm columns are each of numeric class. This suggests that we should conduct a two-way ANOVA for each bulk density depth. This will impact our hypotheses similarly to our hydraulic properties and particle sizes.
 
 \newpage
 
@@ -154,7 +213,8 @@ The site location column in each dataframe (TALK ABOUT BURN SEVERITY AND YEAR LE
 hp_filtered_2013 <- soil_hp_2013_raw %>%
   filter(Site == "BF1" | Site == "BF3" | Site == "BF5") %>%
   rename(Kfs..mm.per.hr...DL = Kfs..mm.per.hr...DL.method) %>%
-  rename(Sorptivity..mm.per.sqrt.hr....DL = Sorptivity..mm.per.sqrt.hr....DL.method) %>%
+  rename(Sorptivity..mm.per.sqrt.hr....DL = 
+           Sorptivity..mm.per.sqrt.hr....DL.method) %>%
   mutate(Year = "2013")
 
 hp_filtered_2015 <- soil_hp_2015_raw %>%
@@ -223,15 +283,21 @@ all_bd <- rbind(bd_filtered_2013, bd_filtered_2015, bd_filtered_2017)
 \newpage
 
 # 5. Analysis
-## 5.1 Question 1: Does wildfire severity influence soil hydraulic properties and recovery over time?
+## 5.1 Question 1: Does wildfire severity influence soil field-saturated hydraulic conductivity recovery over time?
 
-Hsubscript~0~: There is no significant difference in soil hydraulic properties across sites or over time
+H~0~: There is no difference in mean soil field-saturated hydraulic conductivity across burn severities. There is no difference in mean soil field-saturated hydraulic conductivity across years. There is no interaction between burn severity and year.
 
-Hsubscript~A~: There is a significant difference in soil hydraulic properties across sites and over time
+H~a~: There is a difference in mean soil field-saturated hydraulic conductivity across burn severities. There is a difference in mean soil field-saturated hydraulic conductivity across years. There is an interaction between burn severity and year.
+
+## Question 2: Does wildfire severity influence soil sorptivity recovery over time?
+
+H~0~: There is no difference in mean soil sorptivity across burn severities. There is no difference in mean soil sorptivity across years. There is no interaction between burn severity and year.
+
+H~a~: There is a difference in mean soil sorptivity across burn severities. There is a difference in mean soil sorptivity across years. There is an interaction between burn severity and year.
 
 ### 5.1.1 Model: two-way ANOVA for hydraulic properties
 
-```{r hydraulic properties anova, message=F, warning=F, echo=F}
+```{r kfs anova, message=F, warning=F, echo=F}
 #kfs
 kfs.anova.2way <- aov(data = all_hp_new, 
                      log.kfs ~ Site * Year)
@@ -241,7 +307,7 @@ TukeyHSD(kfs.anova.2way)
 
 With a p-value of less than 0.05, we reject the null hypothesis and conclude site does lead to significant differences in kfs values. 
 
-```{r include=F}
+```{r make kfs plot, message=F, warning=F, include=F}
 # in separate code chunk as we will exclude code/outputs
 kfs.interaction <- with(all_hp_new, interaction(Site, Year))
 kfs.anova.2way2 <- aov(data = all_hp_new, log.kfs ~ kfs.interaction)
@@ -251,7 +317,7 @@ kfs.anova.plot <- ggplot(all_hp_new, aes(y = log.kfs, x = Site, color = Year)) +
   geom_boxplot()
 ```
 
-```{r}
+```{r sorptivity anova, message=F, warning=F}
 #sorptivity
 sorptivity.anova.2way <- aov(data = all_hp, 
                      Sorptivity..mm.per.sqrt.hr....DL ~ Site * Year)
@@ -261,14 +327,17 @@ TukeyHSD(sorptivity.anova.2way)
 
 With p-values greater than 0.05,  accept the null hypothesis and conclude sorptivity does not differ significantly across sites or time. 
 
-```{r include=F}
+```{r make sorptivity plot, message=F, warning=F, include=F}
 # in separate code chunk as we will exclude code/outputs
 sorptivity.interaction <- with(all_hp, interaction(Site, Year))
 sorptivity.anova.2way2 <- aov(data = all_hp, Sorptivity..mm.per.sqrt.hr....DL ~ sorptivity.interaction)
-sorptivity.groups <- HSD.test(sorptivity.anova.2way2, "sorptivity.interaction", group = TRUE)
+sorptivity.groups <- HSD.test(sorptivity.anova.2way2, "sorptivity.interaction", 
+                              group = TRUE)
 sorptivity.groups
 
-sorptivity.anova.plot <- ggplot(all_hp, aes(y = Sorptivity..mm.per.sqrt.hr....DL, x = Site, color = Year)) +
+sorptivity.anova.plot <- ggplot(all_hp, 
+                                aes(y = Sorptivity..mm.per.sqrt.hr....DL, 
+                                    x = Site, color = Year)) +
   geom_boxplot()
 ```
 ### 5.1.2 Assumptions
@@ -280,11 +349,13 @@ qqPlot(kfs.anova.2way$residuals, id = F)
 qqPlot(sorptivity.anova.2way$residuals, id = F)
 
 #homogeneity of variances
-leveneTest(kfs.anova.2way)  #original value after outlier removal p = 0.02207. data was then log transformed
+leveneTest(kfs.anova.2way)  
+#original value after outlier removal p = 0.02207. data was then log transformed
 leveneTest(sorptivity.anova.2way)
 
 #outliers
-plot(kfs.anova.2way, which = 5) #observation 310 was an outlier. it has been removed.
+plot(kfs.anova.2way, which = 5) 
+#observation 310 was an outlier. it has been removed.
 plot(sorptivity.anova.2way, which = 5)
 
 ```
@@ -292,26 +363,39 @@ plot(sorptivity.anova.2way, which = 5)
 ### 5.1.3 Residuals
 
 ### 5.1.4 Kfs and sorptivity by site and year
-```{r}
+```{r print kfs and sorptivity plots, message=F, warning=F}
 # plots
 print(kfs.anova.plot)
 print(sorptivity.anova.plot)
 
-#sorptivity.anova.plot.alt <- ggplot(all_hp, aes(y = Sorptivity..mm.per.sqrt.hr....DL, x = Year, color = Site)) +
+#sorptivity.anova.plot.alt <- ggplot(all_hp, 
+#aes(y = Sorptivity..mm.per.sqrt.hr....DL, x = Year, color = Site)) +
 #  geom_boxplot()
 
 #print(sorptivity.anova.plot.alt)
 ```
 
-## 5.2 Question 2: Does wildfire severity influence particle size and recovery over time?
+## 5.2 Question 3: Does wildfire severity influence soil gravel proportion over time?
 
-Hsubscript~0~: There is no significant difference in particle size across sites or over time
+H~0~: There is no difference in mean soil gravel proportion across burn severities. There is no difference in mean soil gravel proportion across years. There is no interaction between burn severity and year.
 
-Hsubscript~A~: There is a significant difference in particle size across sites and over time
+H~a~: There is a difference in mean soil gravel proportion across burn severities. There is a difference in mean soil gravel proportion across years. There is an interaction between burn severity and year.
+
+## Question 4: Does wildfire severity influence soil sand proportion over time?
+
+H~0~: There is no difference in mean soil sand proportion across burn severities. There is no difference in mean soil sand proportion across years. There is no interaction between burn severity and year.
+
+H~a~: There is a difference in mean soil sand proportion across burn severities. There is a difference in mean soil sand proportion across years. There is an interaction between burn severity and year.
+
+## Question 5: Does wildfire severity influence soil silt+clay proportion over time?
+
+H~0~: There is no difference in mean soil silt+clay proportion across burn severities. There is no difference in mean soil silt+clay proportion across years. There is no interaction between burn severity and year.
+
+H~a~: There is a difference in mean soil silt+clay proportion across burn severities. There is a difference in mean soil silt+clay proportion across years. There is an interaction between burn severity and year.
 
 ### 5.2.1 Model: two-way ANOVA for particle size
 
-```{r particle size anova, message=F, warning=F}
+```{r gravel anova, message=F, warning=F}
 #gravel
 ps.g.anova.2way <- aov(data = all_ps, Gravel.... ~ Site * Year)
 summary(ps.g.anova.2way)
@@ -325,7 +409,7 @@ ps.g.anova.plot <- ggplot(all_ps, aes(y = Gravel...., x = Site, color = Year)) +
 ```
 With p-values less than 0.05 across the board, we reject the null hypothesis and conclude that particle size does vary across sites and time. 
 
-```{r}
+```{r sand anova, message=F, warning=F}
 #sand
 ps.s.anova.2way <- aov(data = all_ps, Sand.... ~ Site * Year)
 summary(ps.s.anova.2way)
@@ -340,8 +424,8 @@ ps.s.anova.plot <- ggplot(all_ps, aes(y = Sand...., x = Site, color = Year)) +
 ```
 With p-values less than 0.05 for Site and Year, we reject the null hypothesis and conclude that particle size does vary across sites and time. The interaction effects are insignificant. 
 
-```{r}
-#silt/clay
+```{r silt+clay anova, message=F, warning=F}
+#silt+clay
 ps.sc.anova.2way <- aov(data = all_ps, Silt...Clay.... ~ Site * Year)
 summary(ps.sc.anova.2way)
 TukeyHSD(ps.sc.anova.2way)
@@ -349,7 +433,8 @@ ps.sc.interaction <- with(all_ps, interaction(Site, Year))
 ps.sc.anova.2way2 <- aov(data = all_ps, Silt...Clay.... ~ ps.sc.interaction)
 ps.sc.groups <- HSD.test(ps.sc.anova.2way2, "ps.sc.interaction", group = TRUE)
 ps.sc.groups
-ps.sc.anova.plot <- ggplot(all_ps, aes(y = Silt...Clay...., x = Site, color = Year)) +
+ps.sc.anova.plot <- ggplot(all_ps, aes(y = Silt...Clay...., 
+                                       x = Site, color = Year)) +
   geom_boxplot()
 
 ```
@@ -363,9 +448,15 @@ qqPlot(ps.s.anova.2way$residuals, id = F)
 qqPlot(ps.sc.anova.2way$residuals, id = F)
 
 #homogeneity of variances
-leveneTest(ps.g.anova.2way) #p-value = 7.0882 * 10^-11. transformations did not work. using original, untrasnformed data
-leveneTest(ps.s.anova.2way) #p-value = 0.0002052. transformations did not work. using original, untrasnformed data
-leveneTest(ps.sc.anova.2way) #p-value = 7.027 * 10^-7. transformations did not work. using original, untrasnformed data
+leveneTest(ps.g.anova.2way) 
+#p-value = 7.0882 * 10^-11. transformations did not work. 
+#using original, untrasnformed data
+leveneTest(ps.s.anova.2way) 
+#p-value = 0.0002052. transformations did not work. 
+#using original, untrasnformed data
+leveneTest(ps.sc.anova.2way) 
+#p-value = 7.027 * 10^-7. transformations did not work. 
+#using original, untrasnformed data
 
 #outliers
 plot(ps.g.anova.2way, which = 5) 
@@ -377,20 +468,32 @@ plot(ps.sc.anova.2way, which = 5)
 
 ### 5.2.4 Plots 
 
-```{r}
+```{r print particle size plots, warning=F, message=F}
 print(ps.g.anova.plot)
 print(ps.s.anova.plot)
 print(ps.sc.anova.plot)
 ```
 
-## 5.3 Question 3: How does wildfire severity influence bulk density and recovery over time?
+## 5.3 Question 6: How does wildfire severity influence 0-1cm bulk density recovery over time?
 
-Hsubscript~0~: There is no significant difference in bulk density across sites or over time
+H~0~: There is no difference in mean soil 0-1cm bulk density across burn severities. There is no difference in mean soil 0-1cm bulk density across years. There is no interaction between burn severity and year.
 
-Hsubscript~A~: There is a significant difference in bulk density across sites and over time
+H~a~: There is a difference in mean soil 0-1cm bulk density across burn severities. There is a difference in mean soil 0-1cm bulk density across years. There is an interaction between burn severity and year.
+
+## Question 7: How does wildfire severity influence 1-3cm bulk density recovery over time?
+
+H~0~: There is no difference in mean soil 1-3cm bulk density across burn severities. There is no difference in mean soil 1-3cm bulk density across years. There is no interaction between burn severity and year.
+
+H~a~: There is a difference in mean soil 1-3cm bulk density across burn severities. There is a difference in mean soil 1-3cm bulk density across years. There is an interaction between burn severity and year.
+
+## Question 8: How does wildfire severity influence 3-6cm bulk density recovery over time?
+
+H~0~: There is no difference in mean soil 3-6cm bulk density across burn severities. There is no difference in mean soil 3-6cm bulk density across years. There is no interaction between burn severity and year.
+
+H~a~: There is a difference in mean soil 3-6cm bulk density across burn severities. There is a difference in mean soil 3-6cm bulk density across years. There is an interaction between burn severity and year.
 
 ### 5.3.1 Model: two-way ANOVA for bulk density
-```{r bulk density anova, message=F, warning=F}
+```{r bulk density 0-1cm anova, message=F, warning=F}
 #0-1 cm
 bdA.anova.2way <- aov(data = all_bd, 
                      X0.1.0.cm ~ Site * Year)
@@ -405,7 +508,7 @@ bdA.anova.plot <- ggplot(all_bd, aes(y = X0.1.0.cm, x = Site, color = Year)) +
 ```
 With a p-value of less than 0.05, we reject the null hypothesis and conclude that site location does significantly influence bulk density at this depth and the interaction effects between Site and Year are significant.
 
-```{r}
+```{r bulk density 1-3cm anova, message=F, warning=F}
 #1-3 cm
 bdB.anova.2way <- aov(data = all_bd, 
                      X1.0.3.0.cm ~ Site * Year)
@@ -414,7 +517,7 @@ TukeyHSD(bdB.anova.2way)
 ```
 With a p-value of less than 0.05, we reject the null hypothesis and conclude that site locatioin does significantly influence bulk density at this depth. 
 
-```{r include=F}
+```{r make bulk density 1-3cm plot, message=F, warning=F, include=F}
 bdB.interaction <- with(all_bd, interaction(Site, Year))
 bdB.anova.2way2 <- aov(data = all_bd, X1.0.3.0.cm ~ bdB.interaction)
 bdB.groups <- HSD.test(bdB.anova.2way2, "bdB.interaction", group = TRUE)
@@ -423,7 +526,7 @@ bdB.anova.plot <- ggplot(all_bd, aes(y = X1.0.3.0.cm, x = Site, color = Year)) +
   geom_boxplot()
 ```
 
-```{r}
+```{r bulk density 3-6cm anova, message=F, warning=F}
 #3-6 cm
 bdC.anova.2way <- aov(data = all_bd, 
                      X3.0.6.0.cm ~ Site * Year)
@@ -432,7 +535,7 @@ TukeyHSD(bdC.anova.2way)
 ```
 With a p-value of less than 0.05, we reject the null hypothesis and conclude that site locatioin does significantly influence bulk density at this depth. 
 
-```{r include=F}
+```{r make nulk density 3-6cm plot, message=F, warning=F, include=F}
 bdC.interaction <- with(all_bd, interaction(Site, Year))
 bdC.anova.2way2 <- aov(data = all_bd, X3.0.6.0.cm ~ bdC.interaction)
 bdC.groups <- HSD.test(bdC.anova.2way2, "bdC.interaction", group = TRUE)
@@ -462,7 +565,7 @@ plot(bdC.anova.2way, which = 5)
 ### 5.3.3 Residuals
 
 ### 5.3.4 Plots
-```{r}
+```{r print bulk density plots, message=F, warning=F}
 print(bdA.anova.plot)
 print(bdB.anova.plot)
 print(bdC.anova.plot)
