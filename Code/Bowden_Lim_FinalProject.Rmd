@@ -362,6 +362,18 @@ plot(sorptivity.anova.2way, which = 5)
 
 ### 5.1.3 Residuals
 
+```{r hydraulic properties residual plots, message=F, warning=F}
+#kfs diagnostic plots
+par(mfrow=c(2,2))
+plot(kfs.anova.2way)
+
+#sorptivity diagnostic plots
+par(mfrow=c(2,2))
+plot(sorptivity.anova.2way)
+dev.off()
+```
+
+
 ### 5.1.4 Kfs and sorptivity by site and year
 ```{r print kfs and sorptivity plots, message=F, warning=F}
 # plots
@@ -466,6 +478,21 @@ plot(ps.sc.anova.2way, which = 5)
 ```
 ### 5.2.3 Residuals
 
+```{r particle size residual plots, message=F, warning=F}
+#gravel diagnostic plots
+par(mfrow=c(2,2))
+plot(ps.g.anova.2way)
+
+#sand diagnostic plots
+par(mfrow=c(2,2))
+plot(sorptivity.anova.2way)
+
+#silt+clay diagnostic plots
+par(mfrow=c(2,2))
+plot(ps.sc.anova.2way)
+dev.off()
+```
+
 ### 5.2.4 Plots 
 
 ```{r print particle size plots, warning=F, message=F}
@@ -563,6 +590,21 @@ plot(bdC.anova.2way, which = 5)
 
 ```
 ### 5.3.3 Residuals
+
+```{r bulk density residual plots, message=F, warning=F}
+#0-1cm diagnostic plots
+par(mfrow=c(2,2))
+plot(bdA.anova.2way)
+
+#1-3cm diagnostic plots
+par(mfrow=c(2,2))
+plot(bdB.anova.2way)
+
+#3-6cm diagnostic plots
+par(mfrow=c(2,2))
+plot(bdC.anova.2way)
+dev.off()
+```
 
 ### 5.3.4 Plots
 ```{r print bulk density plots, message=F, warning=F}
