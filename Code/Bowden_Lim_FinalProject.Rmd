@@ -102,11 +102,47 @@ Table: Dataset information
 | Data Source | Soil-physical and soil-hydraulic properties as a function of burn severity for 2013, 2015, and 2017 in the area affected by the 2013 Black Forest Fire, Colorado USA (ver. 2.0, June 2021) | 
 | Date range | 2013-07-23 to 2017-06-19 |
 | Source | Retrieved from: https://www.sciencebase.gov/catalog/item/5b8452f5e4b05f6e321b629b | 
-| Variables used | Soil dry bulk density, soil particle size, soil-hydraulic properties |
+| Variables used | Soil field-saturated hydraulic conductivity (KFS) (mm/hr), soil sorptivity (mm/sqrt[hr]), soil particle size distribution (gravel, sand, silt+clay) (%), and soil dry bulk density (grams/[cm]^3) |
 
 \newpage
 
 # 3. Exploration of raw data
+
+```{r hydraulic properties data exploration, message=F, warning=F}
+#structure of 2013 raw dataset
+str(soil_hp_2013_raw)
+
+#structure of 2015 raw dataset
+str(soil_hp_2015_raw)
+
+#structure of 2017 raw dataset
+str(soil_hp_2017_raw)
+
+#column names of 2013 raw dataset
+colnames(soil_hp_2013_raw)
+
+#column names of 2015 raw dataset
+colnames(soil_hp_2015_raw)
+
+#column names of 2017 raw dataset
+colnames(soil_hp_2017_raw)
+
+#summary 2013 raw dataset
+summary(soil_hp_2013_raw)
+
+#summary of 2015 raw dataset
+summary(soil_hp_2015_raw)
+
+#summary of 2017 raw dataset
+summary(soil_hp_2017_raw)
+
+```
+
+Our 2013 raw dataframe has four variables, two related to site location and two related to hydraulic property measurements. Our 2015 raw dataframe has eight variables. Two are related to site location and six are related to hydraulic property measurements. Our 2017 raw dataframe has nine variables. The first eight are the same as the 2015 raw dataframe and the last variable is an empty column. Both KFS and sorptivity are measured with two different methods and then averaged. Methods used to measure KFS and sorptivity are the differentiated linearization method (DL) and cumulative linearization method (CL). The 2013 dataframe only uses the DL method and so this method should be chosen for all datasets. 
+
+Our 2013 raw dataframe has no missing data. The 2015 raw dataframe has 38 missing values. The 2017 raw dataframe has 70 missing values. These missing values should be discarded before calculating descriptive statistics and conducting relavant tests.
+
+The site location column in each dataframe (TALK ABOUT BURN SEVERITY AND YEAR LEADING US TO DO TWO WAY ANOVA. FACTORS AND CONTINUOUS DEPENDENT VARIABLE). HOW DOES THIS INFLUENCE OUR HYPOTHESIS?
 
 \newpage
 
