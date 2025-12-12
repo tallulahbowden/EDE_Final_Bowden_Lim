@@ -133,7 +133,7 @@ summary(soil_hp_2017_raw)
 
 Our 2013 raw dataframe has four variables, two related to site location and two related to hydraulic property measurements. Our 2015 raw dataframe has eight variables. Two are related to site location and six are related to hydraulic property measurements. Our 2017 raw dataframe has nine variables. The first eight are the same as the 2015 raw dataframe and the last variable is an empty column. Both KFS and sorptivity are measured with two different methods and then averaged. Methods used to measure KFS and sorptivity are the differentiated linearization method (DL) and cumulative linearization method (CL). The 2013 dataframe only uses the DL method and so this method should be chosen for all datasets. 
 
-Our 2013 raw dataframe has no missing data. The 2015 raw dataframe has 38 missing values. The 2017 raw dataframe has 70 missing values. These missing values should be discarded before calculating descriptive statistics and conducting relavant tests.
+Our 2013 raw dataframe has no missing data. The 2015 raw dataframe has 38 missing values. The 2017 raw dataframe has 70 missing values. These missing values should be discarded before calculating descriptive statistics and conducting relevant tests.
 
 The site location column in each dataframe is representative of areas with different burn severities. BF1, BF2, and BF4 are high severity burned areas, BF3 is a moderate severity burned area, and BF5 and BF6 are low severity burned areas. This column in each raw dataset is a factor with six levels. KFS and sorptivity columns in each raw dataset are of the numeric class meaning they are continuous. The structure of our data suggests that we are able to conduct a test with two factors (year and site) each with multiple levels and how they change a continuous dependent variable (KFS and sorptivity). This suggests we should conduct a two-way ANOVA. This influences our hypothesis as we now have three hypotheses for each variable: main effect of factor A, main effect of factor B, and interaction effect between A and B. 
 
@@ -280,6 +280,18 @@ all_bd <- rbind(bd_filtered_2013, bd_filtered_2015, bd_filtered_2017)
 
 ```
 
+```{r}
+#saving processed datasets separately
+write.csv(all_hp, row.names = FALSE,
+          file = "./Data/Processed/Soil_Hydraulic_Properties_Processed.csv")
+
+write.csv(all_ps, row.names = FALSE,
+          file = "./Data/Processed/Soil_Particle_Size_Processed.csv")
+
+write.csv(all_bd, row.names = FALSE,
+          "./Data/Processed/Soil_Bulk_Density_Processed.csv")
+```
+
 \newpage
 
 # 5. Analysis
@@ -305,7 +317,7 @@ summary(kfs.anova.2way)
 TukeyHSD(kfs.anova.2way)
 ```
 
-With a p-value of less than 0.05, we reject the null hypothesis and conclude site does lead to significant differences in kfs values. 
+P-values are greater than .05 except for Site. Thus, we reject the first portion of the null hypothesis and conclude there is a significant difference in mean soil field-saturated hydraulic conductivity across burn severities but not across year and that there is no interaction between burn severity and year.    
 
 ```{r make kfs plot, message=F, warning=F, include=F}
 # in separate code chunk as we will exclude code/outputs
@@ -325,7 +337,7 @@ summary(sorptivity.anova.2way)
 TukeyHSD(sorptivity.anova.2way)
 ```
 
-With p-values greater than 0.05,  accept the null hypothesis and conclude sorptivity does not differ significantly across sites or time. 
+With p-values greater than 0.05 for all variables, we  accept the null hypothesis regarding sorptivity.
 
 ```{r make sorptivity plot, message=F, warning=F, include=F}
 # in separate code chunk as we will exclude code/outputs
@@ -419,7 +431,7 @@ ps.g.groups
 ps.g.anova.plot <- ggplot(all_ps, aes(y = Gravel...., x = Site, color = Year)) +
   geom_boxplot()
 ```
-With p-values less than 0.05 across the board, we reject the null hypothesis and conclude that particle size does vary across sites and time. 
+With p-values less than 0.05 across the board, we reject the null hypothesis and conclude that there is a significant difference in mean soil gravel proportion across burn severities and across years and that there is an interaction between burn severity and year. 
 
 ```{r sand anova, message=F, warning=F}
 #sand
@@ -434,7 +446,7 @@ ps.s.anova.plot <- ggplot(all_ps, aes(y = Sand...., x = Site, color = Year)) +
   geom_boxplot()
 
 ```
-With p-values less than 0.05 for Site and Year, we reject the null hypothesis and conclude that particle size does vary across sites and time. The interaction effects are insignificant. 
+With p-values less than 0.05 for Site and Year, we reject a portion of the null hypothesis and conclude that there is a significant difference in mean soil sand proportion across burn severities and across years but that there is no interaction between burn severity and year. 
 
 ```{r silt+clay anova, message=F, warning=F}
 #silt+clay
@@ -450,7 +462,7 @@ ps.sc.anova.plot <- ggplot(all_ps, aes(y = Silt...Clay....,
   geom_boxplot()
 
 ```
-With p-values less than 0.05 across the board, we reject the null hypothesis and conclude that particle size does vary across sites and time. 
+With p-values less than 0.05 across the board, we reject the null hypothesis and conclude that there is a significant difference in mean soil silt+clay proportion across burn severities and across years and that there is an interaction between burn severity and year. 
 
 ### 5.2.1 Assumptions
 ```{r particle size assumptions, message=F, warning=F}
@@ -533,7 +545,7 @@ bdA.groups
 bdA.anova.plot <- ggplot(all_bd, aes(y = X0.1.0.cm, x = Site, color = Year)) +
   geom_boxplot()
 ```
-With a p-value of less than 0.05, we reject the null hypothesis and conclude that site location does significantly influence bulk density at this depth and the interaction effects between Site and Year are significant.
+With p-values less than 0.05, we reject the null hypothesis and conclude that there is a significant difference in mean soil 0-1cm bulk density across burn severities and across years and that there is an interaction between burn severity and year.
 
 ```{r bulk density 1-3cm anova, message=F, warning=F}
 #1-3 cm
@@ -542,7 +554,7 @@ bdB.anova.2way <- aov(data = all_bd,
 summary(bdB.anova.2way)
 TukeyHSD(bdB.anova.2way)
 ```
-With a p-value of less than 0.05, we reject the null hypothesis and conclude that site locatioin does significantly influence bulk density at this depth. 
+With p-values less than 0.05 only for site, we reject the first portion of the null hypothesis and conclude that there is a significant difference in mean soil 1-3cm bulk density across burn severities but not across years and that there is no interaction between burn severity and year. 
 
 ```{r make bulk density 1-3cm plot, message=F, warning=F, include=F}
 bdB.interaction <- with(all_bd, interaction(Site, Year))
@@ -560,7 +572,7 @@ bdC.anova.2way <- aov(data = all_bd,
 summary(bdC.anova.2way)
 TukeyHSD(bdC.anova.2way)
 ```
-With a p-value of less than 0.05, we reject the null hypothesis and conclude that site locatioin does significantly influence bulk density at this depth. 
+With p-values less than 0.05 only for site, we reject the first portion of the null hypothesis and conclude that there is a significant difference in mean soil 3-6cm bulk density across burn severities but not across years and that there is no interaction between burn severity and year.  
 
 ```{r make nulk density 3-6cm plot, message=F, warning=F, include=F}
 bdC.interaction <- with(all_bd, interaction(Site, Year))
@@ -615,8 +627,29 @@ print(bdC.anova.plot)
 
 \newpage
 
-# 6. Summary and Conclusions
+# 6. Discussion and reflection
+Below is a table summary of our findings, with ‘Yes’ indicating statistical significance.
 
+| Property | Burn Severity | Year | Interaction |
+|:-------|:------|:------|:------|:------|
+|Field-saturated hydraulic conductivity|Yes|No|No|
+|Sorptivity|No|No|No|
+|Gravel proportion|Yes|Yes|Yes|
+|Sand proportion|Yes|Yes|No|
+|Silt/clay proportion|Yes|Yes|Yes|
+|Bulk density 0-1cm|Yes|Yes|Yes|
+|Bulk density 1-3cm|Yes|No|No|
+|Bulk density 3-6cm|Yes|No|No|
+
+Overall, varying burn severities during the 2013 Black Forest Fire in Colorado do appear to have affected all soil properties of interest in our analysis except sorptivity in different ways. Additionally, we see significant differences in means across the years for proportions of all particle sizes and for bulk density at 0-1cm. And we see interaction effects for gravel proportion, silt+clay proportion and bulk density at 0-1cm. 
+
+It’s interesting to see varying impacts to burn severity but no differences across the years or further interaction effects for certain properties. This might suggest that properties are impacted permanently or at the very least are struggling to return to pre-burn values over the four year period, which of course could have implications about overall system/ecosystem recovery. 
+
+Taking field-saturated hydraulic conductivity as an example, when we dive deeper into the differences, we see that sites BF5 and BF1 differ by 0.47, meaning BF5 has a higher field-saturated hydraulic conductivity. So, water moves more easily through this volume of soil at the lower burn severity site when it is fully saturated under field conditions. This likely has implications for runoff / erosion as higher ability for water to flow through could mean less will remain on the surface to runoff.  
+
+Additionally, with no significant difference in mean across years / with the interactions between site and year, this suggests that the properties have not changed over the four year period. Further research would ideally compare these post-burn values to pre-burn values to better examine implications for damage and recovery. Indeed for all properties, we would need data prior to the fire to make further conclusions. 
+
+Nonetheless, this data reveals interesting trends and hopefully represents a useful case study in the broader effort to deepen understanding about how wildfires impact soil properties. As wildfires continue to grow in severity due to climate change, and given the critical role soils play in all ecosystems, the importance of such research will only continue to grow. 
 
 \newpage
 
